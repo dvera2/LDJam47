@@ -9,4 +9,9 @@ public class PlaceableItem : MonoBehaviour
 
     public bool SnapPosition = true;
     public float SnapGrideSize = 0.32f;
+
+    public void SnapToGrid(Vector3 position, Quaternion rotation)
+    {
+        transform.SnapObjectToGrid(position, this);
+    }
 }

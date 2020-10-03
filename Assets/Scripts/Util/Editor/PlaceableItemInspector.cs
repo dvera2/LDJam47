@@ -16,22 +16,7 @@ public class PlaceableItemInspector : Editor
             {
                 if (pi.transform.hasChanged)
                 {
-                    if (pi.SnapPosition)
-                    {
-                        float gridSize = pi.SnapGrideSize;
-                        var pos = pi.transform.position;
-                        pos.x = gridSize * Mathf.RoundToInt(pos.x / gridSize);
-                        pos.y = gridSize * Mathf.RoundToInt(pos.y / gridSize);
-                        pi.transform.position = pos;
-                    }
-
-                    if (pi.SnapRotation)
-                    {
-                        float rotIncrement = pi.RotIncInDegs;
-                        var rot = pi.transform.eulerAngles;
-                        rot.z = rotIncrement * (int)(rot.z / rotIncrement);
-                        pi.transform.eulerAngles = rot;
-                    }
+                    pi.SnapToGrid(pi.transform.position, pi.transform.rotation);
                     //pi.transform.hasChanged = false;
                 }
             }

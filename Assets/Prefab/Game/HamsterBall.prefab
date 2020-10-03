@@ -167,6 +167,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HamsterSprite: {fileID: 4143029773759987288}
+  HamsterWalkAnim:
+  - {fileID: -7424271285197001320, guid: d3a1efca6bffa8d4d83d472b9b5321dc, type: 3}
+  - {fileID: 7759477899926903146, guid: d3a1efca6bffa8d4d83d472b9b5321dc, type: 3}
+  - {fileID: -2542780727834611659, guid: d3a1efca6bffa8d4d83d472b9b5321dc, type: 3}
+  - {fileID: 2490085122039702478, guid: d3a1efca6bffa8d4d83d472b9b5321dc, type: 3}
   RB: {fileID: 4143029772323402359}
 --- !u!114 &-8255252232786032483
 MonoBehaviour:
@@ -180,6 +185,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe2871b0f8c5b246ba6e632ef2eb710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SnapRotation: 1
+  RotIncInDegs: 90
+  SnapPosition: 1
+  SnapGrideSize: 0.32
 --- !u!1 &4143029773759987291
 GameObject:
   m_ObjectHideFlags: 0
