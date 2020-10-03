@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2889606338181386032}
   - component: {fileID: 5848195784751413162}
   - component: {fileID: 4062021723175815713}
+  - component: {fileID: -2330360168316073705}
   m_Layer: 0
   m_Name: LevelExit
   m_TagString: Untagged
@@ -141,5 +142,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bf88e27a90f2274399fb09c1bb19043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2330360168316073705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404438001842347454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe2871b0f8c5b246ba6e632ef2eb710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
