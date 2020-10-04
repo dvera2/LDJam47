@@ -8,6 +8,7 @@ public class UiItemButton : MonoBehaviour
 {
     public ItemAsset Item;
     public Image Image;
+    public int Count = 5;
 
     private void Start()
     {
@@ -20,6 +21,11 @@ public class UiItemButton : MonoBehaviour
 
         if (item && Image)
             Image.sprite = item.Item.PreviewSprite;
+    }
+
+    public void SetCount(int itemCount)
+    {
+        itemCount = Mathf.Max(0, itemCount);
     }
 
     public void DoSelection()

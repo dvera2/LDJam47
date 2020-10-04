@@ -858,6 +858,9 @@ MonoBehaviour:
   StopButton: {fileID: 9126742026786909182}
   LevelComplete: {fileID: 9113821217893119486}
   UiItems: {fileID: 1163598768}
+  ItemGrid: {fileID: 618179281}
+  ItemButtonPrefab: {fileID: 4298853266139327784, guid: 2dc83b1adfeccc545bc6b1e856b2157a,
+    type: 3}
 --- !u!1 &1656941754756958400
 GameObject:
   m_ObjectHideFlags: 0

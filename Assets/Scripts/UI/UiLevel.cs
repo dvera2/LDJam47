@@ -9,7 +9,10 @@ public class UiLevel : MonoBehaviour
     public GameObject StopButton;
     public GameObject LevelComplete;
     public GameObject UiItems;
+    public Transform ItemGrid;
 
+    [Header("Prefab")]
+    public UiItemButton ItemButtonPrefab;
 
     private void Awake()
     {
@@ -26,10 +29,31 @@ public class UiLevel : MonoBehaviour
 
     private void Start()
     {
+        var levelConstraints = GameObject.FindObjectOfType<LevelConstraints>();
+        SetupConstraints(levelConstraints);
+
         EnableObj(LevelComplete, false);
         EnableObj(StartButton, true);
         EnableObj(StopButton, false);
         EnableObj(UiItems, true);
+    }
+
+    private void SetupConstraints(LevelConstraints levelConstraints)
+    {
+        if (!levelConstraints)
+            return;
+
+        if (!ItemGrid)
+            return;
+
+        ItemGrid.transform.ClearChildren();
+
+        // Repopulate with constraint items 
+        foreach(var c in levelConstraints.Items)
+        {
+            var instance = GameObject.Instantiate<UiItemButton>(ItemButtonPrefab, ItemGrid, false);
+            instance.SetItem(c.Item);
+        }
     }
 
     private void OnLevelSimEnded()

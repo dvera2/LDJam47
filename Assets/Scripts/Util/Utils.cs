@@ -51,4 +51,19 @@ public static class Utils
         return FindUpHeirarchy<T>(t.parent);
 
     }
+
+    public static void ClearChildren(this Transform t)
+    {
+        if (!t)
+            return;
+
+        int itemCount = t.childCount;
+        for (int i = itemCount - 1; i >= 0; i--)
+        {
+            if (Application.isPlaying)
+                GameObject.Destroy(t.GetChild(i).gameObject);
+            else
+                GameObject.DestroyImmediate(t.GetChild(i).gameObject);
+        }
+    }
 }
