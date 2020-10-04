@@ -17,6 +17,12 @@ public class PlaceableItemInspector : Editor
                 if (pi.transform.hasChanged)
                 {
                     pi.SnapToGrid(pi.transform.position, pi.transform.rotation);
+
+                    var po = pi.GetComponent<PreplacementObject>();
+                    if (po && po.LockIcon)
+                    {
+                       // po.LockIcon.transform.position = pi.transform.position - new Vector3(0, 0.32f, 0);
+                    }
                     //pi.transform.hasChanged = false;
                 }
             }

@@ -82,6 +82,7 @@ public class PlacementManager : MonoBehaviour
     private PrePlacementInstance _selection;
     private MouseDragData _mouseDrag;
     private Collider2D[] _resultBuffer;
+    private PreplacementObject _lastHoveredObject;
 
     public List<PrePlacementInstance> PreplacementItems => _preplacements;
 
@@ -186,9 +187,32 @@ public class PlacementManager : MonoBehaviour
                 GoToSelectedItemState(entry);
             }
         }
+        else
+        {
+            // Found valid placement? switch to selection state
+            var hoveredItem = FindPreplacementAtPoint(_camera.ScreenToWorldPoint(Input.mousePosition));
+            SetHoveredItem(hoveredItem);
+        }
     }
+
+    private void SetHoveredItem(PreplacementObject hoveredItem)
+    {
+        if (hoveredItem == _lastHoveredObject)
+            return;
+
+        if (_lastHoveredObject != null)
+            _lastHoveredObject.OnHoverEnded();
+
+        _lastHoveredObject = hoveredItem;
+
+        if (_lastHoveredObject != null)
+            _lastHoveredObject.OnHoverStarted();
+    }
+
     private void GoToSelectedItemState(PrePlacementInstance selection)
     {
+        SetHoveredItem(null);
+
         _selection = selection;
 
         if (_selection == null)
@@ -292,6 +316,10 @@ public class PlacementManager : MonoBehaviour
         var placeholder = GameObject.Instantiate<PlaceableItem>(item.Item.PlaceholderPrefab, _preplacementContainer);
         placeholder.transform.SnapToGrid(worldPosition, GridSize);
 
+        var preObject = placeholder.GetComponent<PreplacementObject>();
+        if (preObject)
+            preObject.SetLocked(false);
+
         var ppi = new PrePlacementInstance()
         {
             Item = item,
@@ -320,6 +348,17 @@ public class PlacementManager : MonoBehaviour
         if (collider)
             item = collider.transform.FindUpHeirarchy<PlaceableItem>();
         return GetFromPlaceholder(item);
+    }
+
+    private PreplacementObject FindPreplacementAtPoint(Vector3 worldPosition)
+    {
+        var testPoint = new Vector2(worldPosition.x, worldPosition.y);
+
+        PreplacementObject item = null;
+        var collider = Physics2D.OverlapPoint(testPoint, 1 << LayerMask.NameToLayer("Placement"));
+        if (collider)
+            item = collider.transform.FindUpHeirarchy<PreplacementObject>();
+        return item;
     }
 
     // ----------------------------------------------------------------------------
