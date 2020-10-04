@@ -11,8 +11,13 @@ public class PreplacementObject : MonoBehaviour
 
     private void Start()
     {
-        if (LockIcon)
-            LockIcon.enabled = Locked;
+        var spriteComponents = GetComponentsInChildren<SpriteRenderer>();
+        int sortingOrder = -100000;
+        foreach (var p in spriteComponents)
+            if(p != LockIcon)
+                sortingOrder = Mathf.Max(p.sortingOrder, sortingOrder);
+
+        LockIcon.sortingOrder = sortingOrder + 1;
     }
 
     public void SetLocked(bool locked)
