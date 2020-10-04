@@ -4,27 +4,51 @@ using UnityEngine;
 
 public static class Utils
 {
+    public static Vector3 SnapToGrid(this Vector3 input, float gridSize )
+    {
+        input.x = gridSize * Mathf.RoundToInt(input.x / gridSize);
+        input.y = gridSize * Mathf.RoundToInt(input.y / gridSize);
+        input.z = 0;
+        return input;
+    }
+
+    public static void SnapToGrid(this Transform t, Vector3 worldPosition, float gridSize)
+    {
+        if (t)
+        {
+            t.position = worldPosition.SnapToGrid(gridSize);
+        }
+    }
+
     public static void SnapObjectToGrid(this Transform t, Vector3 worldPosition, PlaceableItem item)
     {
         if(t && item)
         {
             if (item.SnapPosition)
             {
-                float gridSize = item.SnapGrideSize;
-                var pos = worldPosition;
-                pos.x = gridSize * Mathf.RoundToInt(pos.x / gridSize);
-                pos.y = gridSize * Mathf.RoundToInt(pos.y / gridSize);
-                pos.z = 0;
-                t.position = pos;
+                t.SnapToGrid(worldPosition, item.SnapGrideSize);
             }
 
             if (item.SnapRotation)
             {
-                float rotIncrement = item.RotIncInDegs;
+                float rotIncrement = item.AngleInDeg;
                 var rot = t.eulerAngles;
                 rot.z = rotIncrement * (int)(rot.z / rotIncrement);
                 t.eulerAngles = rot;
             }
         }
+    }
+
+    public static PlaceableItem FindItemUpHierarchy(this Transform t)
+    {
+        if (t == null)
+            return null;
+
+        var pi = t.GetComponent<PlaceableItem>();
+        if (pi)
+            return pi;
+
+        return FindItemUpHierarchy(t.parent);
+
     }
 }

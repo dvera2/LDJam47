@@ -7,6 +7,7 @@ using UnityEngine;
 public struct ItemInfo
 {
     public PlaceableItem Prefab;
+    public PlaceableItem PlaceholderPrefab;
     public Sprite PreviewSprite;
 }
 
