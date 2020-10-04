@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11bdee1a25bf9e041975b38894635c05, type: 3}
-  m_Name: Blower
+  m_Name: Spring
   m_EditorClassIdentifier: 
   _itemInfo:
-    Prefab: {fileID: 4830796278888919765, guid: e0710658e57b1db4b94a10aeceee98d9,
-      type: 3}
+    Prefab: {fileID: 563696389327631945, guid: db1ae91b2fe256543831933fcbd81ef2, type: 3}
     PlaceholderPrefab: {fileID: 4830796278888919765, guid: fbbcffc291c1c0441bce4c0d1767990d,
       type: 3}
-    PreviewSprite: {fileID: 21300000, guid: 6da6c127a21b846ba8d086f2e3b0a448, type: 3}
+    PreviewSprite: {fileID: -4224573218930617361, guid: 2dcb4649a514a4da0b62ac2885e1509d,
+      type: 3}
