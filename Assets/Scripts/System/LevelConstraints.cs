@@ -13,6 +13,7 @@ public class ItemConstraint
 
 public class LevelConstraints : MonoBehaviour
 {
+    [Header("Add Available Items Here")]
     public ItemConstraint[] Items;
 
     private void OnValidate()
