@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11bdee1a25bf9e041975b38894635c05, type: 3}
-  m_Name: Spring
+  m_Name: LevelExit
   m_EditorClassIdentifier: 
   _itemInfo:
-    Prefab: {fileID: 563696389327631945, guid: db1ae91b2fe256543831933fcbd81ef2, type: 3}
-    PlaceholderPrefab: {fileID: 563696389327631945, guid: b2b8f4c6349bd844b98c5a0eacd07aeb,
+    Prefab: {fileID: -2330360168316073705, guid: 705aa8e44bb6eb04a89329d96c60304d,
       type: 3}
-    PreviewSprite: {fileID: -4224573218930617361, guid: 2dcb4649a514a4da0b62ac2885e1509d,
+    PlaceholderPrefab: {fileID: -2330360168316073705, guid: fc60106950693914d966d35f960c4ada,
       type: 3}
+    PreviewSprite: {fileID: 21300000, guid: e2a3673808255174b86ce96b91289cb1, type: 3}

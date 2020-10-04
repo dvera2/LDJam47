@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -68,6 +69,7 @@ public class PlacementManager : MonoBehaviour
     
     private ItemAsset _itemToPlace;
     private List<PrePlacementInstance> _preplacements;
+    private List<PreplacementObject> _startingObjects;
     private Dictionary<int, PrePlacementInstance> _preplacementTable;
     private Camera _camera;
     private Action _currentState;
@@ -75,13 +77,29 @@ public class PlacementManager : MonoBehaviour
     private MouseDragData _mouseDrag;
     private Collider2D[] _resultBuffer;
 
+    public List<PrePlacementInstance> PreplacementItems => _preplacements;
+
+    private Transform _preplacementContainer;
+
     // ----------------------------------------------------------------------------
     private void Awake()
     {
         _mouseDrag = new MouseDragData();
         _preplacementTable = new Dictionary<int, PrePlacementInstance>();
         _preplacements = new List<PrePlacementInstance>();
+        _startingObjects = new List<PreplacementObject>();
         _resultBuffer = new Collider2D[20];
+
+
+        // Find existing level objects in the scene.
+        var startingObjects = GameObject.FindObjectsOfType<PreplacementObject>();
+        _startingObjects.AddRange(startingObjects);
+
+
+        GameObject container = new GameObject("Container");
+        container.transform.localPosition = Vector3.zero;
+        container.transform.localRotation = Quaternion.identity;
+        _preplacementContainer = container.transform;
 
         GameEvents.ItemButtonClicked += OnItemButtonClicked;
     }
@@ -216,14 +234,14 @@ public class PlacementManager : MonoBehaviour
     {
         var prefab = item.Item.Prefab;
 
-        var placeholder = GameObject.Instantiate<PlaceableItem>(item.Item.PlaceholderPrefab);
+        var placeholder = GameObject.Instantiate<PlaceableItem>(item.Item.PlaceholderPrefab, _preplacementContainer);
         placeholder.transform.SnapToGrid(worldPosition, GridSize);
 
         var ppi = new PrePlacementInstance()
         {
             Item = item,
             Position = worldPosition.SnapToGrid(GridSize),
-            Angle = prefab.AngleInDeg,
+            Angle = 0f,
             Placeholder = placeholder,
         };
         _preplacements.Add(ppi);
@@ -300,5 +318,43 @@ public class PlacementManager : MonoBehaviour
     {
         if(DebugSprite)
             DebugSprite.color = c;
+    }
+
+    public void DiscoverItems()
+    {
+        //var objects = GameObject.FindObjectOfType<PrePlacementInstance>();
+
+    }
+
+    public void GenerateItems(SceneContainer sceneContainer)
+    {
+        // Process and hide original objects
+        foreach (var s in _startingObjects)
+        {
+            sceneContainer.CreateObject(s.Item.Item.Prefab, s.transform.position, s.transform.eulerAngles.z);
+            s.gameObject.SetActive(false);
+        }
+
+        // Then do player-placed
+        foreach (var p in _preplacements)
+        {
+            sceneContainer.CreateObject(p.Item.Item.Prefab, p.Position, p.Angle);
+        }
+
+        // Hide our container set
+        _preplacementContainer.gameObject.SetActive(false);
+    }
+
+    public bool Validate()
+    {
+        return true;
+    }
+
+    public void RestoreState()
+    {
+        _preplacementContainer.gameObject.SetActive(true);
+
+        foreach (var s in _startingObjects)
+            s.gameObject.SetActive(true);
     }
 }

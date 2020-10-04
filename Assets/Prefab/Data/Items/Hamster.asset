@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11bdee1a25bf9e041975b38894635c05, type: 3}
-  m_Name: Spring
+  m_Name: Hamster
   m_EditorClassIdentifier: 
   _itemInfo:
-    Prefab: {fileID: 563696389327631945, guid: db1ae91b2fe256543831933fcbd81ef2, type: 3}
-    PlaceholderPrefab: {fileID: 563696389327631945, guid: b2b8f4c6349bd844b98c5a0eacd07aeb,
+    Prefab: {fileID: -8255252232786032483, guid: 820eb41cc3e8a9143a10532a74f51042,
       type: 3}
-    PreviewSprite: {fileID: -4224573218930617361, guid: 2dcb4649a514a4da0b62ac2885e1509d,
+    PlaceholderPrefab: {fileID: -8255252232786032483, guid: c41888d4ba47fc24b9755c01f7d830fd,
+      type: 3}
+    PreviewSprite: {fileID: 7759477899926903146, guid: d3a1efca6bffa8d4d83d472b9b5321dc,
       type: 3}

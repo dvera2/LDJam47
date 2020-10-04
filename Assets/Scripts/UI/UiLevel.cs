@@ -5,27 +5,50 @@ using UnityEngine;
 
 public class UiLevel : MonoBehaviour
 {
+    public GameObject StartButton;
+    public GameObject StopButton;
     public GameObject LevelComplete;
+
 
     private void Awake()
     {
+        GameEvents.LevelSimStarted += OnLevelSimStarted;
+        GameEvents.LevelSimEnded += OnLevelSimEnded;
         GameEvents.LevelCompleted += OnLevelComplete;
+    }
+    private void OnDestroy()
+    {
+        GameEvents.LevelSimStarted -= OnLevelSimStarted;
+        GameEvents.LevelSimEnded -= OnLevelSimEnded;
+        GameEvents.LevelCompleted -= OnLevelComplete;
     }
 
     private void Start()
     {
-        if (LevelComplete)
-            LevelComplete.SetActive(false);
+        EnableObj(LevelComplete, false);
+        EnableObj(StopButton, true);
+        EnableObj(StartButton, false);
     }
 
-    private void OnDestroy()
+    private void OnLevelSimEnded()
     {
-        GameEvents.LevelCompleted -= OnLevelComplete;
+        EnableObj(StopButton, false);
+        EnableObj(StartButton, true);
+    }
+
+    private void OnLevelSimStarted()
+    {
+        EnableObj(StopButton, true);
+        EnableObj(StartButton, false);
     }
 
     private void OnLevelComplete()
     {
-        if (LevelComplete)
-            LevelComplete.SetActive(true);
+        EnableObj(LevelComplete, true);
+    }
+
+    private void EnableObj(GameObject obj, bool enable)
+    {
+        if (obj) obj.SetActive(enable);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,28 @@ public class GameManager : MonoBehaviour
 
     public SceneContainer SceneContainer { get; set; }
     public PlacementManager PlacementManager { get; set; }
+
+    public void StartSim()
+    {
+        if(PlacementManager.Validate())
+        {
+            PlacementManager.GenerateItems(SceneContainer);
+
+            GameEvents.TriggerLevelSimStarted();
+        }
+    }
+
+    public void StopSim()
+    {
+        // Call first for any required interception
+        GameEvents.TriggerLevelSimEnded();
+
+        // THEN Clean up player-made stuff
+        SceneContainer.DestroyAll();
+
+        // THEN Restore level state
+        PlacementManager.RestoreState();
+    }
 
     private void Awake()
     {

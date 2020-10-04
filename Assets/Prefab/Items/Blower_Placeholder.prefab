@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6932116874052533818}
   - component: {fileID: 4830796278888919765}
+  - component: {fileID: 6353790759552857874}
   m_Layer: 9
   m_Name: Blower_Placeholder
   m_TagString: Untagged
@@ -49,6 +50,19 @@ MonoBehaviour:
   AngleInDeg: 90
   SnapPosition: 1
   SnapGrideSize: 0.32
+--- !u!114 &6353790759552857874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404438001842347454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5616d8620778b8f4e91c2053cb34f050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 11400000, guid: b9d19ed8b570a2e4badb422dbb6cb7dc, type: 2}
 --- !u!1 &6361057805691735165
 GameObject:
   m_ObjectHideFlags: 0

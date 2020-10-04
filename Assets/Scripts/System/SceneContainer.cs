@@ -11,11 +11,11 @@ public class SceneContainer : MonoBehaviour
         _objects = new List<PlaceableItem>();
     }
 
-    public PlaceableItem CreateObject(PlaceableItem prefab, Vector3 position, float rotation )
+    public PlaceableItem CreateObject(PlaceableItem prefab, Vector3 position, float angle )
     {
         position = position.SnapToGrid(prefab.SnapGrideSize);
 
-        var item = GameObject.Instantiate<PlaceableItem>(prefab, position, Quaternion.Euler(0, 0, rotation));
+        var item = GameObject.Instantiate<PlaceableItem>(prefab, position, Quaternion.Euler(0, 0, angle));
         _objects.Add(item);
         return item;
     }
