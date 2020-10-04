@@ -223,8 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137aaa696fdc92e4585996a9fa947d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Force: 1.5
-  ForceMode: 1
+  Speed: 5.5
   SpringButtonSprite: {fileID: 6138097099500409884}
   NeutralPuppy: {fileID: -4224573218930617361, guid: 2dcb4649a514a4da0b62ac2885e1509d,
     type: 3}

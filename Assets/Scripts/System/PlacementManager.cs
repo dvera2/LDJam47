@@ -198,13 +198,34 @@ public class PlacementManager : MonoBehaviour
 
         // Allow user to drag position, delete, or rotate
         _mouseDrag?.Update();
-        if( _mouseDrag.MouseDragging )
+        if( Input.GetMouseButtonDown(0))
+        {
+            // Found valid placement? switch to selection state
+            var entry = FindPlacementAtPoint(_camera.ScreenToWorldPoint(Input.mousePosition));
+            if (entry == null)
+            {
+                _selection = null;
+                return;
+            }
+        }
+
+        if (_mouseDrag.MouseDragging)
         {
             var wPoint = _camera.ScreenToWorldPoint(Input.mousePosition);
             PreviewSprite.enabled = true;
             PreviewSprite.sprite = _selection.Item.Item.PreviewSprite;
             PreviewSprite.transform.SnapToGrid(wPoint, GridSize);
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                _selection.Angle += 90f;
+                if (_selection.Angle >= 360f)
+                    _selection.Angle -= 360f;
 
+                _selection.Placeholder.transform.rotation = Quaternion.Euler(0, 0, _selection.Angle);
+            }
         }
 
         if( PreviewSprite.enabled )
@@ -248,7 +269,7 @@ public class PlacementManager : MonoBehaviour
         _preplacementTable.Add(ppi.Placeholder.GetInstanceID(), ppi);
     }
 
-    void ClearBuffer(Collider2D[] buffer)
+    private void ClearBuffer(Collider2D[] buffer)
     {
         for (int i = 0; i < buffer.Length; i++)
             buffer[i] = null;
@@ -320,11 +341,6 @@ public class PlacementManager : MonoBehaviour
             DebugSprite.color = c;
     }
 
-    public void DiscoverItems()
-    {
-        //var objects = GameObject.FindObjectOfType<PrePlacementInstance>();
-
-    }
 
     public void GenerateItems(SceneContainer sceneContainer)
     {

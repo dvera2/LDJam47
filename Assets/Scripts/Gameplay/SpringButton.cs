@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class SpringButton : MonoBehaviour
 {
-    public float Force = 1.0f;
-    public ForceMode2D ForceMode = ForceMode2D.Impulse;
+    public float Speed = 1.0f;
     
     public SpriteRenderer SpringButtonSprite;
     public Sprite NeutralPuppy;
@@ -24,7 +23,18 @@ public class SpringButton : MonoBehaviour
         if (!collision.gameObject.CompareTag("Hamster"))
             return;
 
-        collision.attachedRigidbody.AddForce(transform.TransformDirection(Vector2.up) * Force, ForceMode);
+        Rigidbody2D rb = collision.attachedRigidbody;
+
+        // HAX - AddForce does not have any mass-less velocity changing options
+        // so we cancel out existing forces in current direction and set the velocity
+        // to our desired speed.
+        var dir = transform.TransformDirection(Vector3.up).normalized;
+        var dir2D = new Vector2(dir.x, dir.y).normalized;
+
+        var velocity = rb.velocity;
+        velocity = velocity - (Vector2.Dot(dir2D, rb.velocity) * dir2D) + (Speed * dir2D);
+        rb.velocity = velocity;
+
         StartCoroutine(DoSpringTrigger());
     }
 
