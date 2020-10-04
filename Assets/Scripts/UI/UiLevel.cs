@@ -26,8 +26,8 @@ public class UiLevel : MonoBehaviour
     private void Start()
     {
         EnableObj(LevelComplete, false);
-        EnableObj(StopButton, true);
-        EnableObj(StartButton, false);
+        EnableObj(StartButton, true);
+        EnableObj(StopButton, false);
     }
 
     private void OnLevelSimEnded()
