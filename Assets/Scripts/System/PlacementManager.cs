@@ -64,7 +64,13 @@ public class PlacementManager : MonoBehaviour
 {
     public SpriteRenderer PreviewSprite; 
     public SpriteRenderer DebugSprite;
+    public SpriteRenderer SelectionSprite;
 
+    public Color SpriteColorPreview = Color.white;
+    public Color SpriteColorBad = Color.red;
+
+    public int GridSizeX = 20;
+    public int GridSizeY = 20;
     public float GridSize = 0.32f;
     
     private ItemAsset _itemToPlace;
@@ -144,27 +150,30 @@ public class PlacementManager : MonoBehaviour
 
         if (CanBePlaced(PreviewSprite, false))
         {
-            PreviewSprite.color = Color.white;
+            PreviewSprite.color = SpriteColorPreview;
 
             // Place item when clicked
             if (Input.GetMouseButtonDown(0))
             {
-                PlaceItemAt(_itemToPlace, wPoint);
+                var ppi = PlaceItemAt(_itemToPlace, wPoint);
 
                 PreviewSprite.enabled = false;
                 _itemToPlace = null;
+
+                GoToSelectedItemState(ppi);
             }
         }
         else
         {
             // Signal unusable
-            PreviewSprite.color = Color.red;
+            PreviewSprite.color = SpriteColorBad;
         }
     }
 
     // ----------------------------------------------------------------------------
     void NothingSelectedState()
     {
+        SelectionSprite.enabled = false;
         SetDebugColor(Color.black);
 
         // On click, check placed items for selection.
@@ -178,17 +187,21 @@ public class PlacementManager : MonoBehaviour
             }
         }
     }
-    private void GoToSelectedItemState( PrePlacementInstance selection )
+    private void GoToSelectedItemState(PrePlacementInstance selection)
     {
         _selection = selection;
         _mouseDrag.Reset();
         _currentState = SelectedItemState;
+
+        if (SelectionSprite)
+            SelectionSprite.transform.SnapToGrid(selection.Position, GridSize);
     }
 
     // ----------------------------------------------------------------------------
     private void SelectedItemState()
     {
         SetDebugColor(Color.red);
+        SelectionSprite.enabled = true;
 
         if (_selection == null)
         {
@@ -214,7 +227,10 @@ public class PlacementManager : MonoBehaviour
             var wPoint = _camera.ScreenToWorldPoint(Input.mousePosition);
             PreviewSprite.enabled = true;
             PreviewSprite.sprite = _selection.Item.Item.PreviewSprite;
-            PreviewSprite.transform.SnapToGrid(wPoint, GridSize);
+
+            var newPos = wPoint.SnapToGrid(GridSize);
+            PreviewSprite.transform.position = newPos;
+            SelectionSprite.transform.position = newPos; 
         }
         else
         {
@@ -232,7 +248,7 @@ public class PlacementManager : MonoBehaviour
         {
             bool canBePlaced = CanBePlaced(PreviewSprite, true);
 
-            PreviewSprite.color = canBePlaced ? Color.white : Color.red;
+            PreviewSprite.color = canBePlaced ? SpriteColorPreview : SpriteColorBad;
 
             // If we release, reposition the element
             if (_mouseDrag.MouseUp) 
@@ -242,8 +258,12 @@ public class PlacementManager : MonoBehaviour
                     var newPos = PreviewSprite.transform.position.SnapToGrid(GridSize);
                     _selection.Placeholder.transform.position = newPos;
                     _selection.Position = newPos;
+                    SelectionSprite.transform.position = newPos;
                 }
-
+                else
+                {
+                    SelectionSprite.transform.position = _selection.Position;
+                }
                 PreviewSprite.enabled = false;
             }
         }
@@ -251,7 +271,7 @@ public class PlacementManager : MonoBehaviour
     }
 
     // ----------------------------------------------------------------------------
-    private void PlaceItemAt(ItemAsset item, Vector3 worldPosition)
+    private PrePlacementInstance PlaceItemAt(ItemAsset item, Vector3 worldPosition)
     {
         var prefab = item.Item.Prefab;
 
@@ -267,6 +287,7 @@ public class PlacementManager : MonoBehaviour
         };
         _preplacements.Add(ppi);
         _preplacementTable.Add(ppi.Placeholder.GetInstanceID(), ppi);
+        return ppi;
     }
 
     private void ClearBuffer(Collider2D[] buffer)
