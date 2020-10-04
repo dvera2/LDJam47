@@ -66,4 +66,39 @@ public static class Utils
                 GameObject.DestroyImmediate(t.GetChild(i).gameObject);
         }
     }
+
+    public static SurfaceType GetCurrentSurface(this RaycastHit2D hit, SurfaceType current)
+    {
+        if (Vector2.Dot(hit.normal, Vector2.up) > 0.1f)
+        {
+            if (hit.collider.CompareTag("Surface"))
+            {
+                var info = hit.collider.GetComponent<ColliderSurfaceInfo>();
+                if (info)
+                    return info.Surface;
+            }
+        }
+
+        return current;
+    }
+    
+    public static SurfaceType GetCurrentSurface(this Collision2D collision, ContactPoint2D[] buffer, SurfaceType current)
+    {
+        int count = collision.GetContacts(buffer);
+        for (int i = 0; i < count; i++)
+        {
+            // Check if sloped on floor
+            if (Vector2.Dot(buffer[i].normal, Vector2.up) > 0.1f)
+            {
+                if (buffer[i].enabled && buffer[i].collider.CompareTag("Surface"))
+                {
+                    var info = buffer[i].collider.GetComponent<ColliderSurfaceInfo>();
+                    if (info)
+                        return info.Surface;
+                }
+            }
+        }
+        // Didn't find a valid surface, so ignore and assume no change
+        return current;
+    }
 }

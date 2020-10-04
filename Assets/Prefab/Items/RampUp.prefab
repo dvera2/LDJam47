@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 8047779757689771768}
   - component: {fileID: 1126084321065338915}
   - component: {fileID: 6712758813106388757}
-  m_Layer: 0
-  m_Name: Ramp_Up
-  m_TagString: Untagged
+  m_Layer: 10
+  m_Name: RampUp
+  m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Hamster
+  - Surface
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - Interactive
   - Placement
-  - 
+  - Tile
   - 
   - 
   - 

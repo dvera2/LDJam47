@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2992543764708237979}
   - component: {fileID: 2686918529300267046}
   - component: {fileID: 8230506292377365057}
-  m_Layer: 0
+  - component: {fileID: 4633113171952577554}
+  m_Layer: 10
   m_Name: Stopper
-  m_TagString: Untagged
+  m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,6 +98,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
+--- !u!114 &4633113171952577554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781735733630670846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a88215cde1dc3d43ba6480f2fe3bb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Surface: {fileID: 11400000, guid: afce0afd0d24a12458d0e2a3f93c09cb, type: 2}
 --- !u!1 &827843509213218503
 GameObject:
   m_ObjectHideFlags: 0

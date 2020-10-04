@@ -93,9 +93,10 @@ GameObject:
   - component: {fileID: 8047779757689771768}
   - component: {fileID: 1126084321065338915}
   - component: {fileID: 6712758813106388757}
-  m_Layer: 0
-  m_Name: ShortRamp_Down
-  m_TagString: Untagged
+  - component: {fileID: 3345435794635517455}
+  m_Layer: 10
+  m_Name: ShortRampDown
+  m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,3 +181,16 @@ PolygonCollider2D:
     - - {x: 0.3288845, y: -0.32499567}
       - {x: -0.31608644, y: -0.32370746}
       - {x: -0.31680295, y: 0.020783424}
+--- !u!114 &3345435794635517455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473688447431335029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a88215cde1dc3d43ba6480f2fe3bb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Surface: {fileID: 11400000, guid: df673b3b6299158429a8f4fadf0cf49e, type: 2}
