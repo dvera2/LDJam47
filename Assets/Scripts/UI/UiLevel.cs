@@ -8,6 +8,7 @@ public class UiLevel : MonoBehaviour
     public GameObject StartButton;
     public GameObject StopButton;
     public GameObject LevelComplete;
+    public GameObject UiItems;
 
 
     private void Awake()
@@ -28,18 +29,21 @@ public class UiLevel : MonoBehaviour
         EnableObj(LevelComplete, false);
         EnableObj(StartButton, true);
         EnableObj(StopButton, false);
+        EnableObj(UiItems, true);
     }
 
     private void OnLevelSimEnded()
     {
         EnableObj(StopButton, false);
         EnableObj(StartButton, true);
+        EnableObj(UiItems, true);
     }
 
     private void OnLevelSimStarted()
     {
         EnableObj(StopButton, true);
         EnableObj(StartButton, false);
+        EnableObj(UiItems, false);
     }
 
     private void OnLevelComplete()

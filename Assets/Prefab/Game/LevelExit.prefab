@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5848195784751413162}
   - component: {fileID: 4062021723175815713}
   - component: {fileID: -2330360168316073705}
+  - component: {fileID: 744363811703546051}
   m_Layer: 0
   m_Name: LevelExit
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4404438001842347454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.29, y: -0.48, z: 0}
+  m_LocalPosition: {x: 1.28, y: -0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e2a3673808255174b86ce96b91289cb1, type: 3}
+  m_Sprite: {fileID: 270867796513690207, guid: 70766d41c4870418686a33f0f7d00e2d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -156,3 +157,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe2871b0f8c5b246ba6e632ef2eb710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SnapRotation: 1
+  AngleInDeg: 90
+  SnapPosition: 1
+  SnapGrideSize: 0.32
+--- !u!95 &744363811703546051
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404438001842347454}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5dc171869c61b42c98ffc0ed6658ec85, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

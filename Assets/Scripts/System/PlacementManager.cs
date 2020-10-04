@@ -226,6 +226,7 @@ public class PlacementManager : MonoBehaviour
         {
             var wPoint = _camera.ScreenToWorldPoint(Input.mousePosition);
             PreviewSprite.enabled = true;
+            PreviewSprite.transform.rotation = Quaternion.Euler(0, 0, _selection.Angle);
             PreviewSprite.sprite = _selection.Item.Item.PreviewSprite;
 
             var newPos = wPoint.SnapToGrid(GridSize);
@@ -240,7 +241,9 @@ public class PlacementManager : MonoBehaviour
                 if (_selection.Angle >= 360f)
                     _selection.Angle -= 360f;
 
-                _selection.Placeholder.transform.rotation = Quaternion.Euler(0, 0, _selection.Angle);
+                var rot = Quaternion.Euler(0, 0, _selection.Angle);
+                _selection.Placeholder.transform.rotation = rot;
+                PreviewSprite.transform.rotation = rot;
             }
         }
 
