@@ -190,6 +190,13 @@ public class PlacementManager : MonoBehaviour
     private void GoToSelectedItemState(PrePlacementInstance selection)
     {
         _selection = selection;
+
+        if (_selection == null)
+        {
+            _currentState = NothingSelectedState;
+            return;
+        }
+
         _mouseDrag.Reset();
         _currentState = SelectedItemState;
 
@@ -219,6 +226,10 @@ public class PlacementManager : MonoBehaviour
             {
                 _selection = null;
                 return;
+            }
+            else if( _selection != entry )
+            {
+                GoToSelectedItemState(entry);
             }
         }
 
