@@ -303,7 +303,7 @@ Transform:
   m_LocalScale: {x: 4.718046, y: 4.718046, z: 4.718046}
   m_Children: []
   m_Father: {fileID: 114185109}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &485955891
 SpriteRenderer:
@@ -1826,14 +1826,18 @@ PrefabInstance:
       propertyPath: DebugSprite
       value: 
       objectReference: {fileID: 485955891}
+    - target: {fileID: 114185108, guid: 8c10a94e122a65745a67eed8fd9d76bd, type: 3}
+      propertyPath: GridSizeX
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 485955890, guid: 8c10a94e122a65745a67eed8fd9d76bd, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2675866064584728410, guid: 8c10a94e122a65745a67eed8fd9d76bd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5144820495327067298, guid: 8c10a94e122a65745a67eed8fd9d76bd,
         type: 3}
