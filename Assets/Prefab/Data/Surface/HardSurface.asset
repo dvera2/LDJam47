@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Hard Surface
   ImpactAudio: {fileID: 0}
-  RollAudio: {fileID: 8300000, guid: 63c474744a78ca44c9a061fdcdca9b66, type: 3}
+  RollAudio: {fileID: 8300000, guid: 03d65d131c068cb42b1d5cc478d8f820, type: 3}
   DebugSurfaceColor: {r: 0.2901961, g: 0.21960786, b: 0.12941177, a: 1}
