@@ -39,16 +39,16 @@ public static class Utils
         }
     }
 
-    public static PlaceableItem FindItemUpHierarchy(this Transform t)
+    public static T FindUpHeirarchy<T>(this Transform t) where T : Component
     {
         if (t == null)
             return null;
 
-        var pi = t.GetComponent<PlaceableItem>();
+        var pi = t.GetComponent<T>();
         if (pi)
             return pi;
 
-        return FindItemUpHierarchy(t.parent);
+        return FindUpHeirarchy<T>(t.parent);
 
     }
 }

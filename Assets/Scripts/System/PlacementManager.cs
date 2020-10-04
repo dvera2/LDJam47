@@ -61,7 +61,9 @@ public class MouseDragData
 // --------------------------------------------------------------------
 public class PlacementManager : MonoBehaviour
 {
-    public SpriteRenderer PreviewSprite;
+    public SpriteRenderer PreviewSprite; 
+    public SpriteRenderer DebugSprite;
+
     public float GridSize = 0.32f;
     
     private ItemAsset _itemToPlace;
@@ -71,6 +73,7 @@ public class PlacementManager : MonoBehaviour
     private Action _currentState;
     private PrePlacementInstance _selection;
     private MouseDragData _mouseDrag;
+    private Collider2D[] _resultBuffer;
 
     // ----------------------------------------------------------------------------
     private void Awake()
@@ -78,6 +81,7 @@ public class PlacementManager : MonoBehaviour
         _mouseDrag = new MouseDragData();
         _preplacementTable = new Dictionary<int, PrePlacementInstance>();
         _preplacements = new List<PrePlacementInstance>();
+        _resultBuffer = new Collider2D[20];
 
         GameEvents.ItemButtonClicked += OnItemButtonClicked;
     }
@@ -109,6 +113,8 @@ public class PlacementManager : MonoBehaviour
     // ----------------------------------------------------------------------------
     void ObjectPlacementState()
     {
+        SetDebugColor(Color.yellow);
+
         if (!_itemToPlace)
         {
             _currentState = NothingSelectedState;
@@ -118,7 +124,7 @@ public class PlacementManager : MonoBehaviour
         var wPoint = _camera.ScreenToWorldPoint(Input.mousePosition);
         PreviewSprite.transform.SnapToGrid(wPoint, GridSize);
 
-        if (CanBePlaced(PreviewSprite))
+        if (CanBePlaced(PreviewSprite, false))
         {
             PreviewSprite.color = Color.white;
 
@@ -141,6 +147,8 @@ public class PlacementManager : MonoBehaviour
     // ----------------------------------------------------------------------------
     void NothingSelectedState()
     {
+        SetDebugColor(Color.black);
+
         // On click, check placed items for selection.
         if(Input.GetMouseButtonDown(0))
         {
@@ -162,7 +170,9 @@ public class PlacementManager : MonoBehaviour
     // ----------------------------------------------------------------------------
     private void SelectedItemState()
     {
-        if(_selection == null)
+        SetDebugColor(Color.red);
+
+        if (_selection == null)
         {
             _currentState = NothingSelectedState;
             return;
@@ -181,20 +191,21 @@ public class PlacementManager : MonoBehaviour
 
         if( PreviewSprite.enabled )
         {
-            bool canBePlaced = CanBePlaced(PreviewSprite);
+            bool canBePlaced = CanBePlaced(PreviewSprite, true);
+
             PreviewSprite.color = canBePlaced ? Color.white : Color.red;
 
             // If we release, reposition the element
             if (_mouseDrag.MouseUp) 
             {
-                if(!canBePlaced)
+                if(canBePlaced)
                 {
-                    PreviewSprite.enabled = false;
+                    var newPos = PreviewSprite.transform.position.SnapToGrid(GridSize);
+                    _selection.Placeholder.transform.position = newPos;
+                    _selection.Position = newPos;
                 }
-                else
-                {
-                    _selection.Position = PreviewSprite.transform.position.SnapToGrid(GridSize);
-                }
+
+                PreviewSprite.enabled = false;
             }
         }
 
@@ -219,16 +230,21 @@ public class PlacementManager : MonoBehaviour
         _preplacementTable.Add(ppi.Placeholder.GetInstanceID(), ppi);
     }
 
+    void ClearBuffer(Collider2D[] buffer)
+    {
+        for (int i = 0; i < buffer.Length; i++)
+            buffer[i] = null;
+    }
+
     // ----------------------------------------------------------------------------
     private PrePlacementInstance FindPlacementAtPoint(Vector3 worldPosition)
     {
         var testPoint = new Vector2(worldPosition.x, worldPosition.y);
-        var collider2D = Physics2D.OverlapPoint(testPoint, 1 << LayerMask.NameToLayer("Placement"));
 
         PlaceableItem item = null;
-        if (collider2D && collider2D.attachedRigidbody)
-            item = collider2D.attachedRigidbody.transform.FindItemUpHierarchy();
-
+        var collider = Physics2D.OverlapPoint(testPoint, 1 << LayerMask.NameToLayer("Placement"));
+        if (collider)
+            item = collider.transform.FindUpHeirarchy<PlaceableItem>();
         return GetFromPlaceholder(item);
     }
 
@@ -246,9 +262,22 @@ public class PlacementManager : MonoBehaviour
     }
 
     // ----------------------------------------------------------------------------
-    private bool CanBePlaced( SpriteRenderer s )
+    private bool CanBePlaced( SpriteRenderer s, bool checkForSelectedItem = true )
     {
-        return !Physics2D.OverlapBox(s.transform.position, 0.75f* s.size, 0);
+        ClearBuffer(_resultBuffer);
+
+        int count = Physics2D.OverlapBoxNonAlloc(s.transform.position, 0.75f * s.size, 0, _resultBuffer);
+        PlaceableItem obj = null;
+        for(int i = 0; i < count; i++)
+        {
+            obj = _resultBuffer[i].transform.FindUpHeirarchy<PlaceableItem>();
+            if (checkForSelectedItem && obj && obj == _selection.Placeholder)
+                continue;
+
+            if(obj)
+                return false;
+        }
+        return true;
     }
 
 
@@ -267,4 +296,9 @@ public class PlacementManager : MonoBehaviour
             _currentState = ObjectPlacementState;
     }
 
+    private void SetDebugColor(Color c)
+    {
+        if(DebugSprite)
+            DebugSprite.color = c;
+    }
 }
