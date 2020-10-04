@@ -83,6 +83,7 @@ public class PlacementManager : MonoBehaviour
     private MouseDragData _mouseDrag;
     private Collider2D[] _resultBuffer;
     private PreplacementObject _lastHoveredObject;
+    private UiItemButton _currentButton;
 
     public List<PrePlacementInstance> PreplacementItems => _preplacements;
 
@@ -332,9 +333,12 @@ public class PlacementManager : MonoBehaviour
             Placeholder = placeholder,
         };
 
+
         GameManager.GM.Cues.UiPlaceItem.PlayUiSource();
+
         _preplacements.Add(ppi);
         _preplacementTable.Add(ppi.Placeholder.GetInstanceID(), ppi);
+        _currentButton.SetCount(_currentButton.Count - 1);
         return ppi;
     }
 
@@ -402,6 +406,7 @@ public class PlacementManager : MonoBehaviour
     // ----------------------------------------------------------------------------
     private void OnItemButtonClicked(UiItemButton obj)
     {
+        _currentButton = obj;
         _itemToPlace = obj.Item;
 
         if (PreviewSprite)
@@ -414,6 +419,7 @@ public class PlacementManager : MonoBehaviour
             _currentState = ObjectPlacementState;
     }
 
+    // ----------------------------------------------------------------------------
     private void SetDebugColor(Color c)
     {
         if(DebugSprite)

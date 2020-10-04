@@ -27,10 +27,14 @@ public class UiItemButton : MonoBehaviour
 
     public void SetCount(int itemCount)
     {
-        itemCount = Mathf.Max(0, itemCount);
+        Count = Mathf.Max(0, itemCount);
+        GetComponent<Button>().interactable = Count > 0;
 
         if (CountLabel)
-            CountLabel.text = itemCount.ToString();
+        {
+            CountLabel.text = Count.ToString();
+            CountLabel.color = Count > 0 ? Color.white : Color.red;
+        }
     }
 
     public void DoSelection()
