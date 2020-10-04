@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2889606338181386032}
   - component: {fileID: -2330360168316073705}
   - component: {fileID: -2406853252317296631}
+  - component: {fileID: 9184222024052697715}
   m_Layer: 9
   m_Name: LevelExit_Placeholder
   m_TagString: Untagged
@@ -139,3 +140,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Item: {fileID: 11400000, guid: 6613a815a210c66409f79542ffda9036, type: 2}
+--- !u!95 &9184222024052697715
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4404438001842347454}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5dc171869c61b42c98ffc0ed6658ec85, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
