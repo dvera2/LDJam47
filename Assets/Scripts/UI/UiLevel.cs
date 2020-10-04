@@ -8,6 +8,7 @@ public class UiLevel : MonoBehaviour
     public GameObject StartButton;
     public GameObject StopButton;
     public GameObject LevelComplete;
+    public GameObject PostLevelUserControls;
     public GameObject UiItems;
     public Transform ItemGrid;
 
@@ -36,6 +37,7 @@ public class UiLevel : MonoBehaviour
         EnableObj(StartButton, true);
         EnableObj(StopButton, false);
         EnableObj(UiItems, true);
+        EnableObj(PostLevelUserControls, false);
     }
 
     private void SetupConstraints(LevelConstraints levelConstraints)
@@ -53,6 +55,7 @@ public class UiLevel : MonoBehaviour
         {
             var instance = GameObject.Instantiate<UiItemButton>(ItemButtonPrefab, ItemGrid, false);
             instance.SetItem(c.Item);
+            instance.SetCount(c.Count);
         }
     }
 
@@ -73,6 +76,9 @@ public class UiLevel : MonoBehaviour
     private void OnLevelComplete()
     {
         EnableObj(LevelComplete, true);
+        EnableObj(StopButton, false);
+        EnableObj(UiItems, false);
+        EnableObj(PostLevelUserControls, true);
     }
 
     private void EnableObj(GameObject obj, bool enable)

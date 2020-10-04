@@ -8,4 +8,10 @@ public class InterfaceActions : ScriptableObject
     public void StartSimulation() => GameManager.GM.StartSim();
 
     public void StopSimulation() => GameManager.GM.StopSim();
+
+    public void RestartLevel() => GameManager.GM.RestartLevel();
+
+    public void NextLevel() => GameManager.GM.GoToNextLevel();
+
+    public void MainMenu() => GameManager.GM.GoToMainMenu();
 }

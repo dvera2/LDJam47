@@ -8,11 +8,13 @@ public class UiItemButton : MonoBehaviour
 {
     public ItemAsset Item;
     public Image Image;
+    public TMPro.TMP_Text CountLabel;
     public int Count = 5;
 
     private void Start()
     {
         SetItem(Item);
+        SetCount(Count);
     }
 
     public void SetItem(ItemAsset item)
@@ -26,6 +28,9 @@ public class UiItemButton : MonoBehaviour
     public void SetCount(int itemCount)
     {
         itemCount = Mathf.Max(0, itemCount);
+
+        if (CountLabel)
+            CountLabel.text = itemCount.ToString();
     }
 
     public void DoSelection()
