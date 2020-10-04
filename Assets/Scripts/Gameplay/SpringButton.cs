@@ -9,7 +9,7 @@ public class SpringButton : MonoBehaviour
     public SpriteRenderer SpringButtonSprite;
     public Sprite NeutralPuppy;
     public Sprite ActivatedPuppy;
-
+    public AudioSource PuppyAudio;
     private void Awake()
     {
         SpringButtonSprite.sprite = NeutralPuppy;
@@ -41,6 +41,8 @@ public class SpringButton : MonoBehaviour
     private IEnumerator DoSpringTrigger()
     {
         SpringButtonSprite.sprite = ActivatedPuppy;
+        PuppyAudio.Play();
+        PuppyAudio.pitch = Random.Range(0.95f, 1.05f);
 
         yield return new WaitForSeconds(0.5f);
 
