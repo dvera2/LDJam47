@@ -348,8 +348,7 @@ public class PlacementManager : MonoBehaviour
             if (checkForSelectedItem && obj && obj == _selection.Placeholder)
                 continue;
 
-            if(obj)
-                return false;
+            return false;
         }
         return true;
     }
