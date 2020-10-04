@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +10,12 @@ public class GameManager : MonoBehaviour
     public static GameManager GM => _instance;
 
     public SceneContainer SceneContainer { get; set; }
+
     public PlacementManager PlacementManager { get; set; }
+
+    public AudioCues Cues;
+    public AudioSource MainUiSource;
+    public AudioSource MusicSource;
 
     public void StartSim()
     {
@@ -20,17 +24,19 @@ public class GameManager : MonoBehaviour
             PlacementManager.GenerateItems(SceneContainer);
 
             GameEvents.TriggerLevelSimStarted();
+
+            Cues.UiGoButton.PlayUiSource();
         }
     }
 
     public void GoToMainMenu()
     {
-        throw new NotImplementedException();
+        Debug.LogError("Not implemented");
     }
 
     public void GoToNextLevel()
     {
-        throw new NotImplementedException();
+        Debug.LogError("Not implemented");
     }
 
     public void RestartLevel()
@@ -40,6 +46,9 @@ public class GameManager : MonoBehaviour
 
     public void StopSim()
     {
+        // 
+        Cues.UiStopButton.PlayUiSource();
+
         // Call first for any required interception
         GameEvents.TriggerLevelSimEnded();
 
@@ -48,6 +57,21 @@ public class GameManager : MonoBehaviour
 
         // THEN Restore level state
         PlacementManager.RestoreState();
+    }
+
+    public void TriggerLevelComplete()
+    {
+        // Play victory cue
+        int diddy = -1;
+        if (Cues.EndDiddies.Length > 0)
+            diddy = Random.Range(0, Cues.EndDiddies.Length);
+
+        if (diddy >= 0)
+            Cues.EndDiddies[diddy].PlayUiSource();
+
+
+        // trigger completion.
+        GameEvents.TriggerLevelComplete();
     }
 
     private void Awake()
@@ -61,5 +85,13 @@ public class GameManager : MonoBehaviour
         _instance = this;
         SceneContainer = GetComponent<SceneContainer>();
         PlacementManager = GetComponent<PlacementManager>();
+    }
+
+    private void OnDestroy()
+    {
+        if(this == _instance)
+        {
+            _instance = null;
+        }
     }
 }

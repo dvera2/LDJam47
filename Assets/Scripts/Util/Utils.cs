@@ -101,4 +101,16 @@ public static class Utils
         // Didn't find a valid surface, so ignore and assume no change
         return current;
     }
+
+    public static void PlayUiSource(this AudioClip clip)
+    {
+        if (clip == null)
+            return;
+
+        var src = GameManager.GM.MainUiSource;
+        if (!src)
+            return;
+
+        src.PlayOneShot(clip);
+    }
 }

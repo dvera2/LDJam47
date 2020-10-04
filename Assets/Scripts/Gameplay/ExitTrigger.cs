@@ -8,7 +8,7 @@ public class ExitTrigger : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Hamster"))
         {
-            GameEvents.TriggerLevelComplete();
+            GameManager.GM.TriggerLevelComplete();
         }
     }
 }

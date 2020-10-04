@@ -206,7 +206,10 @@ public class PlacementManager : MonoBehaviour
         _lastHoveredObject = hoveredItem;
 
         if (_lastHoveredObject != null)
+        {
+            GameManager.GM.Cues.UiHover.PlayUiSource();
             _lastHoveredObject.OnHoverStarted();
+        }
     }
 
     private void GoToSelectedItemState(PrePlacementInstance selection)
@@ -221,6 +224,7 @@ public class PlacementManager : MonoBehaviour
             return;
         }
 
+        GameManager.GM.Cues.UiSelectItem.PlayUiSource();
         _mouseDrag.Reset();
         _currentState = SelectedItemState;
 
@@ -327,6 +331,8 @@ public class PlacementManager : MonoBehaviour
             Angle = 0f,
             Placeholder = placeholder,
         };
+
+        GameManager.GM.Cues.UiPlaceItem.PlayUiSource();
         _preplacements.Add(ppi);
         _preplacementTable.Add(ppi.Placeholder.GetInstanceID(), ppi);
         return ppi;

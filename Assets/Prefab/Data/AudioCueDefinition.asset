@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4908f08a7046c1244adab11419130c70, type: 3}
+  m_Name: AudioCueDefinition
+  m_EditorClassIdentifier: 
+  UiHover: {fileID: 8300000, guid: 572cd8a76e408ef419a102388c4442d4, type: 3}
+  UiPlaceItem: {fileID: 8300000, guid: fad13632ee03ada41a822633330020b0, type: 3}
+  UiSelectItem: {fileID: 8300000, guid: f06283b921ed9df43a6c84199b776ff3, type: 3}
+  UiGoButton: {fileID: 8300000, guid: b4b2ec85fe8588647ad9f23b8efa2ce0, type: 3}
+  UiStopButton: {fileID: 8300000, guid: 3f6a6d2883452ae489e65a3be91638e9, type: 3}
+  EndDiddies:
+  - {fileID: 8300000, guid: 56bb905263ceac94f8649ca766d0c0f0, type: 3}
+  - {fileID: 8300000, guid: 45a1cdbec28881042ac0047be7cc79f5, type: 3}
