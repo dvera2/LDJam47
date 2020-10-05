@@ -10,7 +10,9 @@ public class Hamster : MonoBehaviour
     public Sprite[] HamsterWalkAnim;
     public Rigidbody2D RB;
     public AudioSource RollingAudio;
+    public AudioSource HamsterAudio;
     public float MaxAudioSpeed;
+    public float MinImpactSpeed = 0.25f;
 
 
     private int _spriteIndex = 0;
@@ -121,6 +123,27 @@ public class Hamster : MonoBehaviour
             _time -= 0.25f;
         }
         return HamsterWalkAnim[_spriteIndex];
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var c = collision.GetContact(0);
+
+        bool shouldPlay = false;
+
+        int contactCount = collision.GetContacts(_contactBuffer);
+        for (int i = 0; i < contactCount; i++)
+        {
+            var v = c.relativeVelocity - (Vector2.Dot(c.relativeVelocity, c.normal) * c.normal);
+            if (v.sqrMagnitude >= MinImpactSpeed * MinImpactSpeed)
+            {
+                shouldPlay = true;
+                break;
+            }
+        }
+
+        if (shouldPlay && HamsterAudio && !HamsterAudio.isPlaying)
+            HamsterAudio.Play();
     }
 
 }

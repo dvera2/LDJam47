@@ -42,7 +42,7 @@ public class SpringButton : MonoBehaviour
     {
         SpringButtonSprite.sprite = ActivatedPuppy;
         PuppyAudio.Play();
-        PuppyAudio.pitch = Random.Range(0.95f, 1.05f);
+        PuppyAudio.pitch = Random.Range(0.97f, 1.03f);
 
         yield return new WaitForSeconds(0.5f);
 
