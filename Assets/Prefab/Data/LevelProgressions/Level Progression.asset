@@ -26,6 +26,12 @@ MonoBehaviour:
     Name: level-4
   - Asset: {fileID: 102900000, guid: 72bf296088b10475f8fc2f7004d1bca6, type: 3}
     Name: level-5
+  - Asset: {fileID: 102900000, guid: d35ae2b06fab14fbda495570637db3c8, type: 3}
+    Name: level-6
+  - Asset: {fileID: 102900000, guid: 9ba2b913a65bc46ff9b63cd5cc2511f0, type: 3}
+    Name: level-7
+  - Asset: {fileID: 102900000, guid: 05900d458506141c4ae2fa04ad71d830, type: 3}
+    Name: level-8
   Ending:
     Asset: {fileID: 102900000, guid: 2b6bfb8b912352c42b4b41e9b6caf63f, type: 3}
     Name: ThanksForPlaying

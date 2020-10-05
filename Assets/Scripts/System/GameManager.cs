@@ -29,21 +29,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GoToMainMenu()
-    {
-        GameFlow.GF.GoToMainMenu();
-    }
-
-    public void GoToNextLevel()
-    {
-        GameFlow.GF.GoToNextLevel();
-    }
-
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     public void StopSim()
     {
         // 

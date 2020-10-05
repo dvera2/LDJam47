@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +10,11 @@ public class InterfaceActions : ScriptableObject
 
     public void StopSimulation() => GameManager.GM.StopSim();
 
-    public void RestartLevel() => GameManager.GM.RestartLevel();
+    public void RestartLevel() => GameFlow.GF.RestartLevel();
 
-    public void NextLevel() => GameManager.GM.GoToNextLevel();
+    public void NextLevel() => GameFlow.GF.GoToNextLevel();
 
-    public void MainMenu() => GameManager.GM.GoToMainMenu();
+    public void MainMenu() => GameFlow.GF.GoToMainMenu();
+
+    public void StartNewGame() => GameFlow.GF.StartGame();
 }

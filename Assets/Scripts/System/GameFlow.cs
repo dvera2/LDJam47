@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,7 @@ public class GameFlow : MonoBehaviour
     public LevelList GameProgression;
     private int _currentLevel = -1;
 
+    // --------------------------------------------------------------------------
     private void Awake()
     {
         if (_instance != null)
@@ -22,27 +24,34 @@ public class GameFlow : MonoBehaviour
         _instance = this;
     }
 
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
+    // --------------------------------------------------------------------------
     private void OnDestroy()
     {
         if (this == _instance)
             _instance = null;
     }
 
+    // --------------------------------------------------------------------------
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
+
+    // --------------------------------------------------------------------------
     public void StartGame()
     {
         _currentLevel = 0;
         SceneManager.LoadScene(GameProgression.Levels[_currentLevel].Name);
     }
 
+    // --------------------------------------------------------------------------
     public void GoToMainMenu()
     {
         SceneManager.LoadScene(GameProgression.MainMenu.Name);
     }
+
+    // --------------------------------------------------------------------------
     public void GoToNextLevel()
     {
         _currentLevel++;
@@ -54,4 +63,11 @@ public class GameFlow : MonoBehaviour
                 SceneManager.LoadScene(GameProgression.Ending.Name);
         }
     }
+
+    // --------------------------------------------------------------------------
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(GameProgression.Levels[_currentLevel].Name);
+    }
+
 }
