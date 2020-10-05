@@ -78,6 +78,7 @@ public class UiLevel : MonoBehaviour
                 PreviewImage.sprite = obj.Sprite;
                 PreviewImage.color = obj.ValidSpot ? c : Color.red;
                 PreviewImage.enabled = true;
+                PreviewImage.rectTransform.rotation = Quaternion.Euler(0, 0, obj.Angle);
 
                 var vp = Camera.main.WorldToViewportPoint(obj.WorldPosition);
                 PreviewImage.rectTransform.anchorMin = vp;

@@ -9,6 +9,7 @@ public struct ItemInfo
     public PlaceableItem Prefab;
     public PlaceableItem PlaceholderPrefab;
     public Sprite PreviewSprite;
+    public float Angle;
 }
 
 [CreateAssetMenu(fileName = "ItemAsset", menuName = "Game/Create Item Asset")]

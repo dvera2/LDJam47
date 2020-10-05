@@ -23,7 +23,10 @@ public class UiItemButton : MonoBehaviour, IPointerDownHandler
         Item = item;
 
         if (item && Image)
+        {
+            Image.rectTransform.rotation = Quaternion.Euler(0, 0, item.Item.Angle);
             Image.sprite = item.Item.PreviewSprite;
+        }
     }
 
     public void SetCount(int itemCount)

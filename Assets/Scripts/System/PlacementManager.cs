@@ -19,6 +19,7 @@ public class PrePlacementInstance
 public class PreviewUpdateArgs : System.EventArgs 
 {
     public Vector3 WorldPosition;
+    public float Angle;
     public Sprite Sprite;
     public bool ValidSpot;
     public bool Enabled;
@@ -172,6 +173,7 @@ public class PlacementManager : MonoBehaviour
         _cachedArgs.Sprite = PreviewSprite.sprite;
         _cachedArgs.ValidSpot = canBePlaced;
         _cachedArgs.Enabled = true;
+        _cachedArgs.Angle = _itemToPlace.Item.Angle;
         GameEvents.TriggerPreviewUpdated(_cachedArgs);
 
         if (canBePlaced)
@@ -369,6 +371,7 @@ public class PlacementManager : MonoBehaviour
 
         var placeholder = GameObject.Instantiate<PlaceableItem>(item.Item.PlaceholderPrefab, _preplacementContainer);
         placeholder.transform.SnapToGrid(worldPosition, GridSize);
+        placeholder.transform.rotation = Quaternion.Euler(0, 0, item.Item.Angle);
 
 
         var preObject = placeholder.GetComponent<PreplacementObject>();
@@ -379,7 +382,7 @@ public class PlacementManager : MonoBehaviour
         {
             Item = item,
             Position = worldPosition.SnapToGrid(GridSize),
-            Angle = 0f,
+            Angle = item.Item.Angle,
             Placeholder = placeholder,
         };
 
@@ -466,6 +469,7 @@ public class PlacementManager : MonoBehaviour
             {
                 PreviewSprite.enabled = true;
                 PreviewSprite.sprite = obj.Item.Item.PreviewSprite;
+                PreviewSprite.transform.rotation = Quaternion.Euler(0, 0, _itemToPlace.Item.Angle);
             }
 
             if (_itemToPlace)
