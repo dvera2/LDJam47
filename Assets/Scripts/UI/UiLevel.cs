@@ -76,7 +76,7 @@ public class UiLevel : MonoBehaviour
                 c.a = 0.5f;
 
                 PreviewImage.sprite = obj.Sprite;
-                PreviewImage.color = obj.ValidSpot ? Color.red : c;
+                PreviewImage.color = obj.ValidSpot ? c : Color.red;
                 PreviewImage.enabled = true;
 
                 var vp = Camera.main.WorldToViewportPoint(obj.WorldPosition);
