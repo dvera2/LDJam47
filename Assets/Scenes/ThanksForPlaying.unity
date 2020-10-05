@@ -216,7 +216,6 @@ GameObject:
   - component: {fileID: 6744717598844471005}
   - component: {fileID: 3093887124159000375}
   - component: {fileID: 6614475266286289451}
-  - component: {fileID: 3292226721962098432}
   m_Layer: 5
   m_Name: UI Canvas
   m_TagString: Untagged
@@ -361,27 +360,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &3292226721962098432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292480431762414956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8579d8143f2f0d74698dddf8d2ed9eca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartButton: {fileID: 0}
-  StopButton: {fileID: 0}
-  LevelComplete: {fileID: 6279990317822153930}
-  PostLevelUserControls: {fileID: 0}
-  UiItems: {fileID: 0}
-  ItemGrid: {fileID: 0}
-  PreviewImage: {fileID: 0}
-  ItemButtonPrefab: {fileID: 4298853266139327784, guid: 2dc83b1adfeccc545bc6b1e856b2157a,
-    type: 3}
 --- !u!224 &3546640216139963905
 RectTransform:
   m_ObjectHideFlags: 0
