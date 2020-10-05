@@ -4948,6 +4948,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Force: 5
+  Particles: {fileID: 5599657343812525699}
+  Trigger: {fileID: 5566802075967610611}
+  _isOn: 1
 --- !u!1 &8156346879913839399
 GameObject:
   m_ObjectHideFlags: 0

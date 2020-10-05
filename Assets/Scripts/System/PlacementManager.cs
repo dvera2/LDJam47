@@ -10,6 +10,8 @@ public class PrePlacementInstance
     public ItemAsset Item;
     public PlaceableItem Placeholder;
     public Vector3 Position;
+    public PlaceableItem LinkedItem;
+    public LineRenderer Line;
     public float Angle;
 }
 
@@ -65,6 +67,7 @@ public class PlacementManager : MonoBehaviour
     public SpriteRenderer PreviewSprite; 
     public SpriteRenderer DebugSprite;
     public SpriteRenderer SelectionSprite;
+    public LineRenderer LinePrefab;
 
     public Color SpriteColorPreview = Color.white;
     public Color SpriteColorBad = Color.red;
