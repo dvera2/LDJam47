@@ -12,3 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4261bc90cf5bb9149826a8417caffe43, type: 3}
   m_Name: Level Progression
   m_EditorClassIdentifier: 
+  MainMenu:
+    Asset: {fileID: 102900000, guid: 5f7a9267a17649d44b47b3956a6310d8, type: 3}
+    Name: MainMenu
+  Levels:
+  - Asset: {fileID: 102900000, guid: 96fc6ab9c823b4d7095012f0f731c0ef, type: 3}
+    Name: level-1
+  - Asset: {fileID: 102900000, guid: 51d4bce6b5d984a81b46d1947d0ae0d3, type: 3}
+    Name: level-2
+  - Asset: {fileID: 102900000, guid: 91787120a73264702ba4221f83ac40cf, type: 3}
+    Name: level-3
+  - Asset: {fileID: 102900000, guid: d1a618e73012842058d6b40eb0886d63, type: 3}
+    Name: level-4
+  - Asset: {fileID: 102900000, guid: 72bf296088b10475f8fc2f7004d1bca6, type: 3}
+    Name: level-5
+  Ending:
+    Asset: {fileID: 102900000, guid: 2b6bfb8b912352c42b4b41e9b6caf63f, type: 3}
+    Name: ThanksForPlaying

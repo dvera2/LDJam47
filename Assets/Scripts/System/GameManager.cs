@@ -31,12 +31,12 @@ public class GameManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        Debug.LogError("Not implemented");
+        GameFlow.GF.GoToMainMenu();
     }
 
     public void GoToNextLevel()
     {
-        Debug.LogError("Not implemented");
+        GameFlow.GF.GoToNextLevel();
     }
 
     public void RestartLevel()
