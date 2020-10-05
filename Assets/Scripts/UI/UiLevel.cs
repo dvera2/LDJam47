@@ -2,15 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UiLevel : MonoBehaviour
 {
-    public GameObject StartButton;
-    public GameObject StopButton;
+    public GameObject EditModeControls;
+    public GameObject PlayModeControls;
     public GameObject LevelComplete;
     public GameObject PostLevelUserControls;
     public GameObject UiItems;
+    public GameObject RulesPanel;
     public Transform ItemGrid;
     public Image PreviewImage; 
 
@@ -40,10 +42,17 @@ public class UiLevel : MonoBehaviour
         SetupConstraints(levelConstraints);
 
         EnableObj(LevelComplete, false);
-        EnableObj(StartButton, true);
-        EnableObj(StopButton, false);
+        EnableObj(EditModeControls, true);
+        EnableObj(PlayModeControls, false);
         EnableObj(UiItems, true);
         EnableObj(PostLevelUserControls, false);
+        EnableObj(RulesPanel, false);
+
+        if( GameFlow.GF )
+        {
+            bool isFirstLevel = GameFlow.GF.GameProgression.Levels.FindIndex((x) => x.Name == SceneManager.GetActiveScene().name) == 0;
+            EnableObj(RulesPanel, isFirstLevel);
+        }
     }
 
     private void SetupConstraints(LevelConstraints levelConstraints)
@@ -89,21 +98,21 @@ public class UiLevel : MonoBehaviour
 
     private void OnLevelSimEnded()
     {
-        EnableObj(StopButton, false);
-        EnableObj(StartButton, true);
+        EnableObj(PlayModeControls, false);
+        EnableObj(EditModeControls, true);
         EnableObj(UiItems, true);
     }
 
     private void OnLevelSimStarted()
     {
-        EnableObj(StopButton, true);
-        EnableObj(StartButton, false);
+        EnableObj(PlayModeControls, true);
+        EnableObj(EditModeControls, false);
         EnableObj(UiItems, false);
     }
 
     private void OnLevelComplete()
     {
-        EnableObj(StopButton, false);
+        EnableObj(PlayModeControls, false);
         EnableObj(UiItems, false);
         EnableObj(PostLevelUserControls, true);
 

@@ -147,8 +147,8 @@ public class Hamster : MonoBehaviour
         int contactCount = collision.GetContacts(_contactBuffer);
         for (int i = 0; i < contactCount; i++)
         {
-            var v = c.relativeVelocity - (Vector2.Dot(c.relativeVelocity, c.normal) * c.normal);
-            if (v.sqrMagnitude >= MinImpactSpeed * MinImpactSpeed)
+            var speedalongNormal = Vector2.Dot(c.relativeVelocity, c.normal);
+            if (speedalongNormal >= MinImpactSpeed )
             {
                 shouldPlay = true;
                 break;

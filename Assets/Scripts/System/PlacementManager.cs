@@ -253,7 +253,7 @@ public class PlacementManager : MonoBehaviour
 
         if (_lastHoveredObject != null)
         {
-            GameManager.GM.Cues.UiHover.PlayUiSource();
+            GameFlow.GF.Cues.UiHover.PlayUiSource();
             _lastHoveredObject.OnHoverStarted();
         }
     }
@@ -274,7 +274,7 @@ public class PlacementManager : MonoBehaviour
         _cachedArgs.Enabled = false;
         GameEvents.TriggerPreviewUpdated(_cachedArgs);
 
-        GameManager.GM.Cues.UiSelectItem.PlayUiSource();
+        GameFlow.GF.Cues.UiSelectItem.PlayUiSource();
         _mouseDrag.Reset();
         _currentState = SelectedItemState;
 
@@ -334,6 +334,11 @@ public class PlacementManager : MonoBehaviour
                 _selection.Placeholder.transform.rotation = rot;
                 PreviewSprite.transform.rotation = rot;
             }
+
+            // Found valid placement? switch to selection state
+            var hoveredItem = FindPreplacementAtPoint(_camera.ScreenToWorldPoint(Input.mousePosition));
+            if( !hoveredItem || hoveredItem.gameObject != _selection.Placeholder.gameObject )
+                SetHoveredItem(hoveredItem);
         }
 
         if( PreviewSprite.enabled )
@@ -387,7 +392,7 @@ public class PlacementManager : MonoBehaviour
         };
 
 
-        GameManager.GM.Cues.UiPlaceItem.PlayUiSource();
+        GameFlow.GF.Cues.UiPlaceItem.PlayUiSource();
 
         _preplacements.Add(ppi);
         _preplacementTable.Add(ppi.Placeholder.GetInstanceID(), ppi);

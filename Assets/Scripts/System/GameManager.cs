@@ -13,10 +13,6 @@ public class GameManager : MonoBehaviour
 
     public PlacementManager PlacementManager { get; set; }
 
-    public AudioCues Cues;
-    public AudioSource MainUiSource;
-    public AudioSource MusicSource;
-
     public void StartSim()
     {
         if(PlacementManager.Validate())
@@ -24,16 +20,11 @@ public class GameManager : MonoBehaviour
             PlacementManager.GenerateItems(SceneContainer);
 
             GameEvents.TriggerLevelSimStarted();
-
-            Cues.UiGoButton.PlayUiSource();
         }
     }
 
     public void StopSim()
     {
-        // 
-        Cues.UiStopButton.PlayUiSource();
-
         // Call first for any required interception
         GameEvents.TriggerLevelSimEnded();
 
@@ -48,11 +39,11 @@ public class GameManager : MonoBehaviour
     {
         // Play victory cue
         int diddy = -1;
-        if (Cues.EndDiddies.Length > 0)
-            diddy = Random.Range(0, Cues.EndDiddies.Length);
+        if (GameFlow.GF.Cues.EndDiddies.Length > 0)
+            diddy = Random.Range(0, GameFlow.GF.Cues.EndDiddies.Length);
 
         if (diddy >= 0)
-            Cues.EndDiddies[diddy].PlayUiSource();
+            GameFlow.GF.Cues.EndDiddies[diddy].PlayUiSource();
 
 
         // trigger completion.
