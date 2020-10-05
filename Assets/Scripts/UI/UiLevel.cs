@@ -102,10 +102,17 @@ public class UiLevel : MonoBehaviour
 
     private void OnLevelComplete()
     {
-        EnableObj(LevelComplete, true);
         EnableObj(StopButton, false);
         EnableObj(UiItems, false);
         EnableObj(PostLevelUserControls, true);
+
+        StartCoroutine(ShowPanel());
+    }
+
+    private IEnumerator ShowPanel()
+    {
+        yield return new WaitForSeconds(2.5f);
+        EnableObj(LevelComplete, true);
     }
 
     private void EnableObj(GameObject obj, bool enable)

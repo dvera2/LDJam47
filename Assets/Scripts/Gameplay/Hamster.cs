@@ -21,6 +21,7 @@ public class Hamster : MonoBehaviour
     private RaycastHit2D[] _raycastHitBuffer = new RaycastHit2D[10];
     private SurfaceType _currentSurface;
     private SurfaceType _prevSurface;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +36,18 @@ public class Hamster : MonoBehaviour
     {
         if (RollingAudio)
             RollingAudio.Stop();
+
+        GameEvents.LevelCompleted += OnLevelCompleted;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.LevelCompleted -= OnLevelCompleted;
+    }
+
+    private void OnLevelCompleted()
+    {
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -81,12 +94,12 @@ public class Hamster : MonoBehaviour
         _currentSurface = surface;
 
         // DEBUG colors
-        
+        /*
         if (_currentSurface == null)
             HamsterSprite.color = Color.black;
         else 
             HamsterSprite.color = _currentSurface.DebugSurfaceColor;
-        
+        */
     }
 
     private void UpdateAudio()
