@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 public class PrePlacementInstance
@@ -13,6 +14,14 @@ public class PrePlacementInstance
     public PlaceableItem LinkedItem;
     public LineRenderer Line;
     public float Angle;
+}
+
+public class PreviewUpdateArgs : System.EventArgs 
+{
+    public Vector3 WorldPosition;
+    public Sprite Sprite;
+    public bool ValidSpot;
+    public bool Enabled;
 }
 
 public class MouseDragData
@@ -91,6 +100,7 @@ public class PlacementManager : MonoBehaviour
     public List<PrePlacementInstance> PreplacementItems => _preplacements;
 
     private Transform _preplacementContainer;
+    private PreviewUpdateArgs _cachedArgs;
 
     // ----------------------------------------------------------------------------
     private void Awake()
@@ -100,7 +110,7 @@ public class PlacementManager : MonoBehaviour
         _preplacements = new List<PrePlacementInstance>();
         _startingObjects = new List<PreplacementObject>();
         _resultBuffer = new Collider2D[20];
-
+        _cachedArgs = new PreviewUpdateArgs();
 
         // Find existing level objects in the scene.
         var startingObjects = GameObject.FindObjectsOfType<PreplacementObject>();
@@ -122,7 +132,8 @@ public class PlacementManager : MonoBehaviour
             PreviewSprite.enabled = false;
 
         _camera = Camera.main;
-        _currentState = NothingSelectedState;
+
+        GoToNothingSelectedState();
     }
 
     // ----------------------------------------------------------------------------
@@ -142,23 +153,33 @@ public class PlacementManager : MonoBehaviour
     // ----------------------------------------------------------------------------
     void ObjectPlacementState()
     {
+        SelectionSprite.enabled = false;
         SetDebugColor(Color.yellow);
 
         if (!_itemToPlace)
         {
-            _currentState = NothingSelectedState;
+            GoToNothingSelectedState();
             return;
         }
 
         var wPoint = _camera.ScreenToWorldPoint(Input.mousePosition);
-        PreviewSprite.transform.SnapToGrid(wPoint, GridSize);
+        wPoint = wPoint.SnapToGrid(GridSize);
+        PreviewSprite.transform.position = wPoint;
+        
+        bool canBePlaced = CanBePlaced(PreviewSprite, false);
 
-        if (CanBePlaced(PreviewSprite, false))
+        _cachedArgs.WorldPosition = wPoint;
+        _cachedArgs.Sprite = PreviewSprite.sprite;
+        _cachedArgs.ValidSpot = canBePlaced;
+        _cachedArgs.Enabled = true;
+        GameEvents.TriggerPreviewUpdated(_cachedArgs);
+
+        if (canBePlaced)
         {
             PreviewSprite.color = SpriteColorPreview;
 
             // Place item when clicked
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 var ppi = PlaceItemAt(_itemToPlace, wPoint);
 
@@ -172,7 +193,26 @@ public class PlacementManager : MonoBehaviour
         {
             // Signal unusable
             PreviewSprite.color = SpriteColorBad;
+
+            if(Input.GetMouseButtonUp(0))
+            {
+                _itemToPlace = null;
+                PreviewSprite.enabled = false;
+                GoToNothingSelectedState();
+                return;
+            }
         }
+    }
+
+    void GoToNothingSelectedState()
+    {
+        _selection = null;
+        _itemToPlace = null;
+        _currentButton = null;
+        _currentState = NothingSelectedState;
+
+        _cachedArgs.Enabled = false;
+        GameEvents.TriggerPreviewUpdated(_cachedArgs);
     }
 
     // ----------------------------------------------------------------------------
@@ -224,9 +264,13 @@ public class PlacementManager : MonoBehaviour
 
         if (_selection == null)
         {
-            _currentState = NothingSelectedState;
+            GoToNothingSelectedState();
             return;
         }
+
+
+        _cachedArgs.Enabled = false;
+        GameEvents.TriggerPreviewUpdated(_cachedArgs);
 
         GameManager.GM.Cues.UiSelectItem.PlayUiSource();
         _mouseDrag.Reset();
@@ -244,7 +288,7 @@ public class PlacementManager : MonoBehaviour
 
         if (_selection == null)
         {
-            _currentState = NothingSelectedState;
+            GoToNothingSelectedState();
             return;
         }
 
@@ -305,6 +349,8 @@ public class PlacementManager : MonoBehaviour
                     _selection.Placeholder.transform.position = newPos;
                     _selection.Position = newPos;
                     SelectionSprite.transform.position = newPos;
+
+                    //GameManager.GM.Cues.UiPlaceItem.PlayUiSource();
                 }
                 else
                 {
@@ -323,6 +369,7 @@ public class PlacementManager : MonoBehaviour
 
         var placeholder = GameObject.Instantiate<PlaceableItem>(item.Item.PlaceholderPrefab, _preplacementContainer);
         placeholder.transform.SnapToGrid(worldPosition, GridSize);
+
 
         var preObject = placeholder.GetComponent<PreplacementObject>();
         if (preObject)
@@ -345,6 +392,7 @@ public class PlacementManager : MonoBehaviour
         return ppi;
     }
 
+    // ----------------------------------------------------------------------------
     private void ClearBuffer(Collider2D[] buffer)
     {
         for (int i = 0; i < buffer.Length; i++)
@@ -407,19 +455,22 @@ public class PlacementManager : MonoBehaviour
 
 
     // ----------------------------------------------------------------------------
-    private void OnItemButtonClicked(UiItemButton obj)
+    private void OnItemButtonClicked(UiItemButton obj, PointerEventData data)
     {
-        _currentButton = obj;
-        _itemToPlace = obj.Item;
-
-        if (PreviewSprite)
+        if (data.button == PointerEventData.InputButton.Left)
         {
-            PreviewSprite.enabled = true;
-            PreviewSprite.sprite = obj.Item.Item.PreviewSprite;
-        }
+            _currentButton = obj;
+            _itemToPlace = obj.Item;
 
-        if (_itemToPlace)
-            _currentState = ObjectPlacementState;
+            if (PreviewSprite)
+            {
+                PreviewSprite.enabled = true;
+                PreviewSprite.sprite = obj.Item.Item.PreviewSprite;
+            }
+
+            if (_itemToPlace)
+                _currentState = ObjectPlacementState;
+        }
     }
 
     // ----------------------------------------------------------------------------
@@ -460,5 +511,21 @@ public class PlacementManager : MonoBehaviour
 
         foreach (var s in _startingObjects)
             s.gameObject.SetActive(true);
+    }
+
+    private void OnDrawGizmos()
+    {
+        float x = transform.position.x;
+        float y = transform.position.y;
+
+        float l = -0.5f * GridSize * GridSizeX + x;
+        float r = 0.5f * GridSize * GridSizeX + x;
+        float t = 0.5f * GridSize * GridSizeY + y;
+        float b = -0.5f * GridSize * GridSizeY + y;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(new Vector3(l, t, 0), new Vector3(r, t, 0));
+        Gizmos.DrawLine(new Vector3(l, b, 0), new Vector3(r, b, 0));
+        Gizmos.DrawLine(new Vector3(l, t, 0), new Vector3(l, b, 0));
+        Gizmos.DrawLine(new Vector3(r, t, 0), new Vector3(r, b, 0));
     }
 }

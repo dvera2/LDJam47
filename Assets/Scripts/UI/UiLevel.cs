@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiLevel : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class UiLevel : MonoBehaviour
     public GameObject PostLevelUserControls;
     public GameObject UiItems;
     public Transform ItemGrid;
+    public Image PreviewImage; 
 
     [Header("Prefab")]
     public UiItemButton ItemButtonPrefab;
@@ -20,9 +22,13 @@ public class UiLevel : MonoBehaviour
         GameEvents.LevelSimStarted += OnLevelSimStarted;
         GameEvents.LevelSimEnded += OnLevelSimEnded;
         GameEvents.LevelCompleted += OnLevelComplete;
+        GameEvents.ItemPreviewUpdated += OnItemPreviewUpdated;
     }
+
+
     private void OnDestroy()
     {
+        GameEvents.ItemPreviewUpdated -= OnItemPreviewUpdated;
         GameEvents.LevelSimStarted -= OnLevelSimStarted;
         GameEvents.LevelSimEnded -= OnLevelSimEnded;
         GameEvents.LevelCompleted -= OnLevelComplete;
@@ -56,6 +62,27 @@ public class UiLevel : MonoBehaviour
             var instance = GameObject.Instantiate<UiItemButton>(ItemButtonPrefab, ItemGrid, false);
             instance.SetItem(c.Item);
             instance.SetCount(c.Count);
+        }
+    }
+
+    private void OnItemPreviewUpdated(PreviewUpdateArgs obj)
+    {
+        if (PreviewImage)
+        {
+            PreviewImage.enabled = obj.Enabled;
+            if (obj.Enabled)
+            {
+                Color c = Color.white;
+                c.a = 0.5f;
+
+                PreviewImage.sprite = obj.Sprite;
+                PreviewImage.color = obj.ValidSpot ? Color.red : c;
+                PreviewImage.enabled = true;
+
+                var vp = Camera.main.WorldToViewportPoint(obj.WorldPosition);
+                PreviewImage.rectTransform.anchorMin = vp;
+                PreviewImage.rectTransform.anchorMax = vp;
+            }
         }
     }
 

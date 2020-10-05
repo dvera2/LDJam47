@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-public class UiItemButton : MonoBehaviour
+public class UiItemButton : MonoBehaviour, IPointerDownHandler
 {
     public ItemAsset Item;
     public Image Image;
@@ -37,8 +38,9 @@ public class UiItemButton : MonoBehaviour
         }
     }
 
-    public void DoSelection()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        GameEvents.TriggerItemButtonClicked(this);
+        if(Count > 0)
+            GameEvents.TriggerItemButtonPointer(this, eventData);
     }
 }

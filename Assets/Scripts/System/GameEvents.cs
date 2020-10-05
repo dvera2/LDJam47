@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameEvents
 {
@@ -14,7 +15,11 @@ public class GameEvents
     public static void TriggerLevelSimEnded() => LevelSimEnded?.Invoke();
     public static event Action LevelSimEnded;
     
-    public static void TriggerItemButtonClicked(UiItemButton button) => ItemButtonClicked?.Invoke(button);
-    public static event Action<UiItemButton> ItemButtonClicked; 
+    public static void TriggerItemButtonPointer(UiItemButton button, PointerEventData data) => ItemButtonClicked?.Invoke(button, data);
+    public static event Action<UiItemButton, PointerEventData> ItemButtonClicked;
+
+
+    public static void TriggerPreviewUpdated(PreviewUpdateArgs args) => ItemPreviewUpdated?.Invoke(args);
+    public static event Action<PreviewUpdateArgs> ItemPreviewUpdated;
 
 }
