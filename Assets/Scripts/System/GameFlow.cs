@@ -34,6 +34,7 @@ public class GameFlow : MonoBehaviour
     // --------------------------------------------------------------------------
     private void Start()
     {
+        transform.parent = null;
         DontDestroyOnLoad(gameObject);
     }
 
