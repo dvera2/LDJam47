@@ -6735,10 +6735,7 @@ MonoBehaviour:
     Count: 2
   - Name: BlowerUp
     Item: {fileID: 11400000, guid: b9d19ed8b570a2e4badb422dbb6cb7dc, type: 2}
-    Count: 1
-  - Name: BlowerUp
-    Item: {fileID: 11400000, guid: b9d19ed8b570a2e4badb422dbb6cb7dc, type: 2}
-    Count: 1
+    Count: 2
 --- !u!4 &1794431695
 Transform:
   m_ObjectHideFlags: 0

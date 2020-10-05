@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script marking an object as a placeholder instance that is used during the
+/// game's edit-mode.
+/// </summary>
 [SelectionBase]
 public class PreplacementObject : MonoBehaviour
 {
@@ -10,6 +14,7 @@ public class PreplacementObject : MonoBehaviour
     public SpriteRenderer LockIcon;
     public bool Locked = true;
 
+    // -------------------------------------------------------------
     private void Start()
     {
         if (LockIcon)
@@ -26,6 +31,7 @@ public class PreplacementObject : MonoBehaviour
         }
     }
 
+    // -------------------------------------------------------------
     public void SetLocked(bool locked)
     {
         Locked = locked;
@@ -34,12 +40,14 @@ public class PreplacementObject : MonoBehaviour
             LockIcon.enabled = Locked;
     }
 
+    // -------------------------------------------------------------
     public void OnHoverEnded()
     {
         if (LockIcon)
             LockIcon.enabled = false;
     }
 
+    // -------------------------------------------------------------
     public void OnHoverStarted()
     {
         if (LockIcon)
