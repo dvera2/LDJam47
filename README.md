@@ -20,4 +20,4 @@ Players can place the following items based on availability in the level:
 - Woman's pump: Shallow slope
 - Plant: Blocks Hammy
 
-The code and assets in this repository are all original.
+The code and assets in this repository are all original and utilize the Unity Tilemap editor tools and TextMeshPro.
